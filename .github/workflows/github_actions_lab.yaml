@@ -1,0 +1,21 @@
+name: Github Actions Lab
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  example:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Build docker image
+        run: docker build -t hikrysti/github-actions-lab1 .
+
+      - name: Docker hub sign-in
+        run: echo ${{ secrets.DOCKER_HUB_TOKEN }} | docker login -u hikrysti --password-stdin
+
+      - name: Push to docker hub
+        run: docker push hikrysti/github_actions_lab:latest
